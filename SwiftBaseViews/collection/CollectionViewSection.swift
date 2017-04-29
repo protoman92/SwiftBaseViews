@@ -62,7 +62,7 @@ public protocol CollectionSectionHolderType {
 /// Each instance of this class represents a section for
 /// UIAdapterInputListView. We can extend it to provide custom implementations
 /// for different data structures.
-public class CollectionSectionHolder {
+open class CollectionSectionHolder {
     public let section: CollectionSectionType
     
     public init(with section: CollectionSectionType) {
@@ -70,7 +70,7 @@ public class CollectionSectionHolder {
     }
     
     /// BaseBuilder class for CollectionSectionHolder.
-    public class BaseBuilder {
+    open class BaseBuilder {
         fileprivate var section: CollectionSectionHolder
         
         
@@ -82,15 +82,9 @@ public class CollectionSectionHolder {
             self.section = instance
         }
         
-        public func build() -> CollectionSectionHolder {
+        public func build() -> CollectionSectionHolderType {
             return section
         }
-    }
-}
-
-extension CollectionSectionHolder: CustomComparisonType {
-    public func equals(object: CollectionSectionHolder?) -> Bool {
-        return section.identifier == object?.section.identifier
     }
 }
 

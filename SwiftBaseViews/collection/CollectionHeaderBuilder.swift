@@ -32,7 +32,7 @@ open class CollectionHeaderBuilder {
         self.section = section
     }
     
-    public func builderComponents(for view: UIView) -> [ViewBuilderComponentType] {
+    open func builderComponents(for view: UIView) -> [ViewBuilderComponentType] {
         let section = self.section
         let headerTitle = self.headerTitle(for: view, using: section)
         return [headerTitle]

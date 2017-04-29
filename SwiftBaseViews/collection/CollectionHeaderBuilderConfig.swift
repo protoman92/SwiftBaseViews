@@ -32,7 +32,7 @@ open class CollectionHeaderBuilderConfig {
         self.decorator = decorator
     }
     
-    public func configure(for view: UIView) {
+    open func configure(for view: UIView) {
         view.backgroundColor = backgroundColor
         
         if let headerTitle = view.subviews.filter({
