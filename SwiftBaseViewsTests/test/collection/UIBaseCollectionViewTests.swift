@@ -49,14 +49,14 @@ class UIBaseCollectionViewTests: XCTestCase {
 }
 
 fileprivate class UITestCollectionView: UIBaseCollectionView {
-    override var presenterInstance: UIBaseCollectionView.CollectionPresenter? {
+    override var presenterInstance: BaseCollectionViewPresenter? {
         return presenter
     }
     
     lazy var presenter: Presenter = Presenter(view: self)
 }
 
-fileprivate class Presenter: UIBaseCollectionView.CollectionPresenter {
+fileprivate class Presenter: BaseCollectionViewPresenter {
     let fake_reloadData = FakeDetails.builder().build()
     
     init(view: UIBaseCollectionView) {

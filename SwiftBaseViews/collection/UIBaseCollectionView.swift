@@ -17,48 +17,48 @@ open class UIBaseCollectionView: UICollectionView {
     
     /// UIBaseCollectionView subclasses must override this variable to
     /// provide their own presenter implementations.
-    open var presenterInstance: CollectionPresenter? {
+    open var presenterInstance: BaseCollectionViewPresenter? {
         fatalError("Must override this")
     }
+}
+
+/// Base presenter class for UIBaseCollectionView.
+open class BaseCollectionViewPresenter: BaseViewPresenter {
     
-    /// Base presenter class for UIBaseCollectionView.
-    open class CollectionPresenter: BaseViewPresenter {
-        
-        /// Decorator to configure appearance.
-        let decorator: Variable<CollectionViewDecoratorType?>
-        
-        /// Use this DisposeBag for rx-related operations.
-        public let disposeBag: DisposeBag
-        
-        public override init<P: UIBaseCollectionView>(view: P) {
-            decorator = Variable<CollectionViewDecoratorType?>(nil)
-            disposeBag = DisposeBag()
-            super.init(view: view)
-            setupDecoratorObserver(for: view, with: self)
-        }
-        
-        /// Stub out this method to avoid double-calling reloadData() during
-        /// unit tests.
-        ///
-        /// - Parameters:
-        ///   - view: The current UICollectionView instance.
-        ///   - current: The current CollectionPresenter instance.
-        open func setupDecoratorObserver(for view: UICollectionView,
-                                         with current: CollectionPresenter) {
-            decorator.asObservable()
-                .doOnNext({[weak current, weak view] _ in
-                    current?.reloadData(for: view)
-                })
-                .subscribe()
-                .addDisposableTo(disposeBag)
-        }
-        
-        /// Reload data for the current collection view.
-        ///
-        /// - Parameter view: A UICollectionView instance.
-        open func reloadData(for view: UICollectionView?) {
-            view?.reloadData()
-        }
+    /// Decorator to configure appearance.
+    let decorator: Variable<CollectionViewDecoratorType?>
+    
+    /// Use this DisposeBag for rx-related operations.
+    public let disposeBag: DisposeBag
+    
+    public override init<P: UIBaseCollectionView>(view: P) {
+        decorator = Variable<CollectionViewDecoratorType?>(nil)
+        disposeBag = DisposeBag()
+        super.init(view: view)
+        setupDecoratorObserver(for: view, with: self)
+    }
+    
+    /// Stub out this method to avoid double-calling reloadData() during
+    /// unit tests.
+    ///
+    /// - Parameters:
+    ///   - view: The current UICollectionView instance.
+    ///   - current: The current BaseCollectionViewPresenter instance.
+    open func setupDecoratorObserver(for view: UICollectionView,
+                                     with current: BaseCollectionViewPresenter) {
+        decorator.asObservable()
+            .doOnNext({[weak current, weak view] _ in
+                current?.reloadData(for: view)
+            })
+            .subscribe()
+            .addDisposableTo(disposeBag)
+    }
+    
+    /// Reload data for the current collection view.
+    ///
+    /// - Parameter view: A UICollectionView instance.
+    open func reloadData(for view: UICollectionView?) {
+        view?.reloadData()
     }
 }
 
@@ -71,7 +71,7 @@ public extension UIBaseCollectionView {
     }
 }
 
-extension UIBaseCollectionView.CollectionPresenter: UICollectionViewDelegateFlowLayout {
+extension BaseCollectionViewPresenter: UICollectionViewDelegateFlowLayout {
     public func collectionView(_ collectionView: UICollectionView,
                                layout collectionViewLayout: UICollectionViewLayout,
                                insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -98,7 +98,7 @@ extension UIBaseCollectionView.CollectionPresenter: UICollectionViewDelegateFlow
     }
 }
 
-extension UIBaseCollectionView.CollectionPresenter: CollectionViewDecoratorType {
+extension BaseCollectionViewPresenter: CollectionViewDecoratorType {
     
     /// Item spacing.
     public var itemSpacing: CGFloat {
