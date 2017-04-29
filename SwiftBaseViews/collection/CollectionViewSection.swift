@@ -71,8 +71,7 @@ open class CollectionSectionHolder {
     
     /// BaseBuilder class for CollectionSectionHolder.
     open class BaseBuilder {
-        fileprivate var section: CollectionSectionHolder
-        
+        public let section: CollectionSectionHolder
         
         /// Initialize the current Builder with a custom CollectionSectionHolder
         /// instance.
