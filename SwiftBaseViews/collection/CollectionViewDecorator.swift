@@ -1,5 +1,5 @@
 //
-//  CollectionViewDecoratorType.swift
+//  CollectionViewDecorator.swift
 //  SwiftBaseViews
 //
 //  Created by Hai Pham on 4/29/17.
@@ -7,7 +7,6 @@
 //
 
 import UIKit
-
 
 /// Implement this protocol to provide configurations for UICollectionView 
 /// appearance.
