@@ -31,7 +31,6 @@
 		D31A59321EB4AC3A002A6304 /* ListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31A59301EB4AC3A002A6304 /* ListSection.swift */; };
 		D31A59331EB4AC3A002A6304 /* ListHeaderDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31A59311EB4AC3A002A6304 /* ListHeaderDecorator.swift */; };
 		D31A59371EB4AD18002A6304 /* ListHeaderBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31A59341EB4AD18002A6304 /* ListHeaderBuilder.swift */; };
-		D31A59381EB4AD18002A6304 /* ListHeaderBuilderConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31A59351EB4AD18002A6304 /* ListHeaderBuilderConfig.swift */; };
 		D31A59391EB4AD18002A6304 /* ListHeaderIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31A59361EB4AD18002A6304 /* ListHeaderIdentifier.swift */; };
 /* End PBXBuildFile section */
 
@@ -75,7 +74,6 @@
 		D31A59301EB4AC3A002A6304 /* ListSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListSection.swift; path = list/ListSection.swift; sourceTree = "<group>"; };
 		D31A59311EB4AC3A002A6304 /* ListHeaderDecorator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListHeaderDecorator.swift; path = list/ListHeaderDecorator.swift; sourceTree = "<group>"; };
 		D31A59341EB4AD18002A6304 /* ListHeaderBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListHeaderBuilder.swift; path = list/ListHeaderBuilder.swift; sourceTree = "<group>"; };
-		D31A59351EB4AD18002A6304 /* ListHeaderBuilderConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListHeaderBuilderConfig.swift; path = list/ListHeaderBuilderConfig.swift; sourceTree = "<group>"; };
 		D31A59361EB4AD18002A6304 /* ListHeaderIdentifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListHeaderIdentifier.swift; path = list/ListHeaderIdentifier.swift; sourceTree = "<group>"; };
 		D6D3D7B2BA032235A7A37FC5 /* Pods-SwiftBaseViewsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftBaseViewsTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftBaseViewsTests/Pods-SwiftBaseViewsTests.release.xcconfig"; sourceTree = "<group>"; };
 		E4F96913CCC97337C72C053E /* Pods-SwiftBaseViews.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftBaseViews.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftBaseViews/Pods-SwiftBaseViews.debug.xcconfig"; sourceTree = "<group>"; };
@@ -117,7 +115,6 @@
 			isa = PBXGroup;
 			children = (
 				D31A59341EB4AD18002A6304 /* ListHeaderBuilder.swift */,
-				D31A59351EB4AD18002A6304 /* ListHeaderBuilderConfig.swift */,
 				D31A59311EB4AC3A002A6304 /* ListHeaderDecorator.swift */,
 				D31A59361EB4AD18002A6304 /* ListHeaderIdentifier.swift */,
 				D3189AF51EB56EEC00FF93B5 /* ListItemHolder.swift */,
@@ -453,7 +450,6 @@
 				D3189AFE1EB59FAF00FF93B5 /* ListSectionHolder.swift in Sources */,
 				D31906CE1EB4440E00BCE271 /* UIViewPresenter.swift in Sources */,
 				D31906CA1EB4440E00BCE271 /* UIBaseViewController.swift in Sources */,
-				D31A59381EB4AD18002A6304 /* ListHeaderBuilderConfig.swift in Sources */,
 				D31906DE1EB4474100BCE271 /* UIBaseTextField.swift in Sources */,
 				D3189AF81EB571E600FF93B5 /* SectionableListItem.swift in Sources */,
 				D31906DC1EB4472300BCE271 /* UIBaseLabel.swift in Sources */,

@@ -23,10 +23,6 @@ public protocol ListSectionType {
     /// view building phase. Return nil to use a default type.
     var viewBuilderType: ListHeaderBuilderType.Type? { get }
     
-    /// Configuration class type for dynamic construction of configuration
-    /// classes during config phase. Return nil to use a default type.
-    var viewConfigType: ListHeaderConfigType.Type? { get }
-    
     /// Decorator for header view.
     var decorator: ListHeaderDecoratorType { get }
 }
@@ -39,13 +35,5 @@ public extension ListSectionType {
     public func viewBuilder() -> ListHeaderBuilderType {
         let type = (viewBuilderType ?? ListHeaderBuilder.self)
         return type.init(with: self)
-    }
-    
-    /// Get a view config class for configuration.
-    ///
-    /// - Returns: An ListHeaderConfigType instance.
-    public func viewConfig() -> ListHeaderConfigType {
-        let type = (viewConfigType ?? ListHeaderBuilderConfig.self)
-        return type.init(with: self.decorator)
     }
 }

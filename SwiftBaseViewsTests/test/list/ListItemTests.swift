@@ -82,7 +82,6 @@ extension Section1: ListSectionType {
     var identifier: String { return "Section1 \(count)" }
     var header: String { return identifier }
     var viewBuilderType: ListHeaderBuilderType.Type? { return nil }
-    var viewConfigType: ListHeaderConfigType.Type? { return nil }
     var decorator: ListHeaderDecoratorType { return HeaderDecorator() }
 }
 

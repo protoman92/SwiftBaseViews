@@ -22,17 +22,24 @@ public protocol ListHeaderBuilderType: ViewBuilderType {
     
     /// Get the associated list view section.
     var section: ListSectionType { get }
+    
+    /// Use this decorator to configure collection view header appearance.
+    var decorator: ListHeaderDecoratorType { get }
 }
 
 /// Builder class for collection/table view header views. This is the default 
 /// class to be used whenever a ListHeaderBuilderType instance is required.
 open class ListHeaderBuilder {
     public let section: ListSectionType
+    public let decorator: ListHeaderDecoratorType
     
     public required init(with section: ListSectionType) {
         self.section = section
+        self.decorator = section.decorator
     }
-    
+}
+
+extension ListHeaderBuilder {
     open func builderComponents(for view: UIView) -> [ViewBuilderComponentType] {
         let section = self.section
         let headerTitle = self.headerTitle(for: view, using: section)
@@ -68,6 +75,35 @@ open class ListHeaderBuilder {
             .with(view: label)
             .with(constraints: constraints)
             .build()
+    }
+}
+
+extension ListHeaderBuilder {
+    open func configure(for view: UIView) {
+        view.backgroundColor = backgroundColor
+        
+        if let headerTitle = view.subviews.filter({
+            $0.accessibilityIdentifier == headerTitleId
+        }).first as? UILabel {
+            configure(headerTitle: headerTitle)
+        }
+    }
+    
+    /// Configure the header title label.
+    ///
+    /// - Parameter headerTitle: A UILabel instance.
+    open func configure(headerTitle: UILabel) {
+        headerTitle.textColor = headerTitleTextColor
+    }
+}
+
+extension ListHeaderBuilder: ListHeaderDecoratorType {
+    public var headerTitleTextColor: UIColor {
+        return decorator.headerTitleTextColor ?? .darkGray
+    }
+    
+    public var backgroundColor: UIColor {
+        return decorator.backgroundColor ?? .clear
     }
 }
 
