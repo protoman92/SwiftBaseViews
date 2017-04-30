@@ -8,7 +8,7 @@
 
 import SwiftUtilities
 
-/// Implement this protocol to hold an Array of items for a collection/table 
+/// Implement this protocol to hold an Array of items for a collection/table
 /// view.
 public protocol ListItemHolderType {
     associatedtype Item
@@ -16,7 +16,7 @@ public protocol ListItemHolderType {
     var items: [Item] { get }
 }
 
-/// Use this struct to carry Item instances, instead of having an Array of 
+/// Use this struct to carry Item instances, instead of having an Array of
 /// Item objects.
 public struct ListItemHolder<Element> {
     public typealias Item = Element
@@ -94,6 +94,12 @@ public extension ListItemHolder {
     
     /// Return all items.
     public var items: [Element] { return allItems }
+}
+
+public extension ListItemHolder {
+    public static func builder() -> ListItemHolderBuilder<Element> {
+        return ListItemHolderBuilder()
+    }
 }
 
 extension ListItemHolder: ListItemHolderType {}

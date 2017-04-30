@@ -116,14 +116,14 @@
 		D3189AF91EB574DB00FF93B5 /* list */ = {
 			isa = PBXGroup;
 			children = (
-				D3189AF51EB56EEC00FF93B5 /* ListItemHolder.swift */,
-				D3189AF71EB571E600FF93B5 /* SectionableListItem.swift */,
 				D31A59341EB4AD18002A6304 /* ListHeaderBuilder.swift */,
 				D31A59351EB4AD18002A6304 /* ListHeaderBuilderConfig.swift */,
-				D31A59361EB4AD18002A6304 /* ListHeaderIdentifier.swift */,
-				D31A59301EB4AC3A002A6304 /* ListSection.swift */,
 				D31A59311EB4AC3A002A6304 /* ListHeaderDecorator.swift */,
+				D31A59361EB4AD18002A6304 /* ListHeaderIdentifier.swift */,
+				D3189AF51EB56EEC00FF93B5 /* ListItemHolder.swift */,
+				D31A59301EB4AC3A002A6304 /* ListSection.swift */,
 				D3189AFD1EB59FAF00FF93B5 /* ListSectionHolder.swift */,
+				D3189AF71EB571E600FF93B5 /* SectionableListItem.swift */,
 			);
 			name = list;
 			sourceTree = "<group>";

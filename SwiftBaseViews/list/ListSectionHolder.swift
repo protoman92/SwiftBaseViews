@@ -24,7 +24,7 @@ public protocol ListSectionHolderType {
 /// Each instance of this class represents a section for a collection/table
 /// view. We can extend it to provide custom implementations for different
 /// data structures.
-public class ListSectionHolder<Item> {
+public struct ListSectionHolder<Item> {
     public let section: ListSectionType
     
     fileprivate var sectionItems: [Item]
@@ -41,11 +41,18 @@ public class ListSectionHolderBuilder<Element> {
     
     public var sectionHolder: ListSectionHolder<Item>
     
+    /// Initialize the current Builder with a ListSectionHolder instance.
+    ///
+    /// - Parameter section: A ListSectionHolder instance.
+    public init(with holder: ListSectionHolder<Item>) {
+        self.sectionHolder = holder
+    }
+    
     /// Initialize the current Builder with a ListSectionType instance.
     ///
     /// - Parameter section: A ListSectionType instance.
-    public required init(with section: ListSectionType) {
-        sectionHolder = ListSectionHolder<Item>(with: section)
+    public convenience init(with section: ListSectionType) {
+        self.init(with: ListSectionHolder<Item>(with: section))
     }
     
     /// Append an Item.

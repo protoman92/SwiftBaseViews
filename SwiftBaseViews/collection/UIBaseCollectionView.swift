@@ -25,14 +25,19 @@ open class UIBaseCollectionView: UICollectionView {
 /// Base presenter class for UIBaseCollectionView.
 open class BaseCollectionViewPresenter: BaseViewPresenter {
     
+    /// Return the current CollectionViewDecoratorType instance.
+    public var decorator: CollectionViewDecoratorType? {
+        return rxDecorator.value
+    }
+    
     /// Decorator to configure appearance.
-    let decorator: Variable<CollectionViewDecoratorType?>
+    let rxDecorator: Variable<CollectionViewDecoratorType?>
     
     /// Use this DisposeBag for rx-related operations.
     public let disposeBag: DisposeBag
     
     public override init<P: UIBaseCollectionView>(view: P) {
-        decorator = Variable<CollectionViewDecoratorType?>(nil)
+        rxDecorator = Variable<CollectionViewDecoratorType?>(nil)
         disposeBag = DisposeBag()
         super.init(view: view)
         setupDecoratorObserver(for: view, with: self)
@@ -46,7 +51,7 @@ open class BaseCollectionViewPresenter: BaseViewPresenter {
     ///   - current: The current BaseCollectionViewPresenter instance.
     open func setupDecoratorObserver(for view: UICollectionView,
                                      with current: BaseCollectionViewPresenter) {
-        decorator.asObservable()
+        rxDecorator.asObservable()
             .doOnNext({[weak current, weak view] _ in
                 current?.reloadData(for: view)
             })
@@ -66,8 +71,8 @@ public extension UIBaseCollectionView {
     
     /// When decorator is set, pass it to the presenter.
     public var decorator: CollectionViewDecoratorType? {
-        get { return presenterInstance?.decorator.value }
-        set { presenterInstance?.decorator.value = newValue }
+        get { return presenterInstance?.rxDecorator.value }
+        set { presenterInstance?.rxDecorator.value = newValue }
     }
 }
 
@@ -101,17 +106,17 @@ extension BaseCollectionViewPresenter: UICollectionViewDelegateFlowLayout {
 extension BaseCollectionViewPresenter: CollectionViewDecoratorType {
     
     /// Item spacing.
-    public var itemSpacing: CGFloat {
-        return decorator.value?.itemSpacing ?? 0
+    open var itemSpacing: CGFloat {
+        return decorator?.itemSpacing ?? 0
     }
     
     /// Section spacing
-    public var sectionSpacing: CGFloat {
-        return decorator.value?.sectionSpacing ?? 0
+    open var sectionSpacing: CGFloat {
+        return decorator?.sectionSpacing ?? 0
     }
     
-    public var sectionHeight: CGFloat {
-        return decorator.value?.sectionHeight ?? 0
+    open var sectionHeight: CGFloat {
+        return decorator?.sectionHeight ?? 0
     }
 }
 

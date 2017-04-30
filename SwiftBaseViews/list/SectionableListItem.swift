@@ -19,9 +19,9 @@ public protocol SectionableListItemType {
 
 public extension ListItemHolderType where Item: SectionableListItemType {
     
-    /// Get the associated section for all SectionableListItemType instances. 
-    /// If there are different sections among the items, take only the first 
-    /// one i.e. we are assuming all items share the same section (as it should 
+    /// Get the associated section for all SectionableListItemType instances.
+    /// If there are different sections among the items, take only the first
+    /// one i.e. we are assuming all items share the same section (as it should
     /// be).
     public var section: ListSectionType? {
         return items.first?.section

@@ -32,7 +32,7 @@ public protocol ListSectionType {
 }
 
 public extension ListSectionType {
-
+    
     /// Get a view builder class for dynamic building.
     ///
     /// - Returns: An ListHeaderBuilderType instance.
