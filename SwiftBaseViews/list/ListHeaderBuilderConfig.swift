@@ -9,26 +9,26 @@
 import SwiftUtilities
 import SwiftUIUtilities
 
-/// Implement this protocol to provide configurations for collection view 
-/// headers.
-public protocol CollectionHeaderConfigType: ViewBuilderConfigType {
+/// Implement this protocol to provide configurations for collection/table 
+/// view headers.
+public protocol ListHeaderConfigType: ViewBuilderConfigType {
     
-    /// Initialize a CollectionHeaderConfigType instance using a
-    /// CollectionHeaderDecoratorType object. The latter contains information
+    /// Initialize a ListHeaderConfigType instance using a 
+    /// ListHeaderDecoratorType object. The latter contains information
     /// required to configure the header view's appearance.
     ///
-    /// - Parameter decorator: A CollectionHeaderDecoratorType instance.
-    init(with decorator: CollectionHeaderDecoratorType)
+    /// - Parameter decorator: A ListHeaderDecoratorType instance.
+    init(with decorator: ListHeaderDecoratorType)
     
     /// Use this decorator to configure collection view header appearance.
-    var decorator: CollectionHeaderDecoratorType { get }
+    var decorator: ListHeaderDecoratorType { get }
 }
 
-/// Builder configuration class for collection view header.
-open class CollectionHeaderBuilderConfig {
-    public let decorator: CollectionHeaderDecoratorType
+/// Builder configuration class for collection/table view header.
+open class ListHeaderBuilderConfig {
+    public let decorator: ListHeaderDecoratorType
     
-    public required init(with decorator: CollectionHeaderDecoratorType) {
+    public required init(with decorator: ListHeaderDecoratorType) {
         self.decorator = decorator
     }
     
@@ -50,10 +50,10 @@ open class CollectionHeaderBuilderConfig {
     }
 }
 
-extension CollectionHeaderBuilderConfig: CollectionHeaderConfigType {}
-extension CollectionHeaderBuilderConfig: CollectionHeaderIdentifierType {}
+extension ListHeaderBuilderConfig: ListHeaderConfigType {}
+extension ListHeaderBuilderConfig: ListHeaderIdentifierType {}
 
-extension CollectionHeaderBuilderConfig: CollectionHeaderDecoratorType {
+extension ListHeaderBuilderConfig: ListHeaderDecoratorType {
     public var headerTitleTextColor: UIColor {
         return decorator.headerTitleTextColor ?? .darkGray
     }

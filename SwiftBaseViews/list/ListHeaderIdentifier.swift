@@ -1,5 +1,5 @@
 //
-//  CollectionHeaderIdentifier.swift
+//  ListHeaderIdentifier.swift
 //  SwiftInputListView
 //
 //  Created by Hai Pham on 4/25/17.
@@ -7,9 +7,9 @@
 //
 
 /// Implement this protocol to access view accessibilityIdenfitier.
-public protocol CollectionHeaderIdentifierType {}
+public protocol ListHeaderIdentifierType {}
 
-public extension CollectionHeaderIdentifierType {
+public extension ListHeaderIdentifierType {
     
     /// Accessibility identifier for header title.
     public var headerTitleId: String { return "headerTitle" }
