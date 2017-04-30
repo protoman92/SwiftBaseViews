@@ -15,7 +15,7 @@ public protocol ListSectionHolderType {
     associatedtype Item
     
     /// Get the associated ListSectionType.
-    var section: ListSectionType { get }
+    var section: ListSectionType? { get }
     
     /// Get the associated Array of ListItemHolder.
     var items: [Item] { get }
@@ -25,12 +25,11 @@ public protocol ListSectionHolderType {
 /// view. We can extend it to provide custom implementations for different
 /// data structures.
 public struct ListSectionHolder<Item> {
-    public let section: ListSectionType
+    fileprivate var listSection: ListSectionType?
     
     fileprivate var sectionItems: [Item]
     
-    public init(with section: ListSectionType) {
-        self.section = section
+    public init() {
         sectionItems = []
     }
 }
@@ -40,19 +39,9 @@ public class ListSectionHolderBuilder<Element> {
     public typealias Item = Element
     
     public var sectionHolder: ListSectionHolder<Item>
-    
-    /// Initialize the current Builder with a ListSectionHolder instance.
-    ///
-    /// - Parameter section: A ListSectionHolder instance.
-    public init(with holder: ListSectionHolder<Item>) {
-        self.sectionHolder = holder
-    }
-    
-    /// Initialize the current Builder with a ListSectionType instance.
-    ///
-    /// - Parameter section: A ListSectionType instance.
-    public convenience init(with section: ListSectionType) {
-        self.init(with: ListSectionHolder<Item>(with: section))
+
+    fileprivate init() {
+        sectionHolder = ListSectionHolder<Item>()
     }
     
     /// Append an Item.
@@ -86,6 +75,15 @@ public class ListSectionHolderBuilder<Element> {
         return self
     }
     
+    /// Set listSection.
+    ///
+    /// - Parameter section: A ListSectionType instance.
+    /// - Returns: The current Builder instance.
+    public func with(section: ListSectionType?) -> ListSectionHolderBuilder<Item> {
+        sectionHolder.listSection = section
+        return self
+    }
+    
     public func build() -> ListSectionHolder<Item> {
         return sectionHolder
     }
@@ -95,18 +93,18 @@ public extension ListSectionHolder {
     
     /// Return all items.
     public var items: [Item] { return sectionItems }
+    
+    /// Return listSection.
+    public var section: ListSectionType? { return listSection }
 }
 
 public extension ListSectionHolder {
     
     /// Return a ListSectionHolderBuilder instance.
     ///
-    /// - Parameter section: A ListSectionType instance.
     /// - Returns: A ListSectionHolderBuilder instance.
-    public static func builder(with section: ListSectionType)
-        -> ListSectionHolderBuilder<Item>
-    {
-        return ListSectionHolderBuilder<Item>(with: section)
+    public static func builder() -> ListSectionHolderBuilder<Item> {
+        return ListSectionHolderBuilder<Item>()
     }
 }
 

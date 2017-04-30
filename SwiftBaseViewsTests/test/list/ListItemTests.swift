@@ -20,7 +20,9 @@ class ListItemTests: XCTestCase {
         
         // Then
         XCTAssertNotNil(holder.section)
-        XCTAssertEqual(holder.section?.identifier, items.first?.section?.identifier)
+        
+        XCTAssertEqual(holder.section?.identifier,
+                       items.first?.section?.identifier)
     }
     
     func test_createSectionHolders_shouldSucceed() {
@@ -28,8 +30,9 @@ class ListItemTests: XCTestCase {
         let items = Item1.randomItems()
         
         // When
-        let holder = ListSectionHolder<Item1>.builder(with: Section1())
+        let holder = ListSectionHolder<Item1>.builder()
             .with(items: items)
+            .with(section: Section1())
             .build()
         
         // Then
