@@ -37,33 +37,53 @@ open class ListHeaderBuilder {
         self.section = section
         self.decorator = section.decorator
     }
-}
 
-extension ListHeaderBuilder {
-    open func builderComponents() -> [ViewBuilderComponentType] {
-        let section = self.section
-        let headerTitle = self.headerTitle(using: section)
-        return [headerTitle]
+    // MARK: ViewBuilderType
+    
+    /// Get an Array of UIView subviews to be added to a UIView.
+    /// - Parameter view: The parent UIView instance.
+    /// - Returns: An Array of ViewBuilderComponentType.
+    open func subviews(for view: UIView) -> [UIView] {
+        return [headerTitle()]
     }
     
     /// Get a UILabel to act as the header title.
     ///
     /// - Returns: A UILabel instance.
-    open func headerTitle() -> UILabel { return UILabel() }
+    open func headerTitle() -> UILabel {
+        let label = UILabel()
+        label.accessibilityIdentifier = headerTitleId
+        return label
+    }
     
-    /// Get an Array of NSLayoutConstraint to be added to the parent UIView.
-    /// This function will be called within a closure, so the label needs
-    /// to be optional to avoid leaks.
+    /// Get an Array of NSLayoutConstraint to be added to a UIView.
+    ///
+    /// - Parameter view: The parent UIView instance.
+    /// - Returns: An Array of NSLayoutConstraint.
+    open func constraints(for view: UIView) -> [NSLayoutConstraint] {
+        var allConstraints = [NSLayoutConstraint]()
+        let subviews = view.subviews
+        
+        if let label = subviews.filter({
+            $0.accessibilityIdentifier == headerTitleId
+        }).first as? UILabel {
+            let constraints = self.constraints(forHeaderTitle: label, for: view)
+            allConstraints.append(contentsOf: constraints)
+        }
+        
+        return allConstraints
+    }
+    
+    /// Get an Array of NSLayoutConstraint for the header title label to be 
+    /// added to the parent UIView.
     ///
     /// - Parameters:
-    ///   - view: The parent UIView
     ///   - label: An optional UILabel instance.
+    ///   - view: The parent UIView
     /// - Returns: An Array of NSLayoutConstraint.
-    open func headerTitleConstraints(for view: UIView, for label: UILabel?)
+    open func constraints(forHeaderTitle label: UILabel, for view: UIView)
         -> [NSLayoutConstraint]
     {
-        guard let label = label else { return [] }
-        
         return FitConstraintSet.builder()
             .with(parent: view)
             .with(child: label)
@@ -73,28 +93,6 @@ extension ListHeaderBuilder {
             .add(bottom: true)
             .build()
             .constraints
-    }
-    
-    /// Header title for each section.
-    ///
-    /// - Parameters section: An ListSectionType instance.
-    /// - Returns: A ViewBuilderComponentType instance.
-    open func headerTitle(using section: ListSectionType)
-        -> ViewBuilderComponentType
-    {
-        let label = headerTitle()
-
-        label.accessibilityIdentifier = headerTitleId
-        
-        let closure: (UIView) -> [NSLayoutConstraint] = {
-            [weak self, weak label] in
-            return self?.headerTitleConstraints(for: $0, for: label) ?? []
-        }
-        
-        return ViewBuilderComponent.builder()
-            .with(view: label)
-            .with(closure: closure)
-            .build()
     }
 }
 
