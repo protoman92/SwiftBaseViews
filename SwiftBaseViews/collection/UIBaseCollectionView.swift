@@ -67,10 +67,10 @@ open class BaseCollectionViewPresenter: BaseViewPresenter {
     }
 }
 
-public extension UIBaseCollectionView {
+extension UIBaseCollectionView {
     
     /// When decorator is set, pass it to the presenter.
-    public var decorator: CollectionViewDecoratorType? {
+    open var decorator: CollectionViewDecoratorType? {
         get { return presenterInstance?.rxDecorator.value }
         set { presenterInstance?.rxDecorator.value = newValue }
     }
@@ -78,26 +78,26 @@ public extension UIBaseCollectionView {
 
 // MARK: - UICollectionViewDelegateFlowLayout
 extension BaseCollectionViewPresenter: UICollectionViewDelegateFlowLayout {
-    public func collectionView(_ collectionView: UICollectionView,
-                               layout collectionViewLayout: UICollectionViewLayout,
-                               insetForSectionAt section: Int) -> UIEdgeInsets {
+    open func collectionView(_ collectionView: UICollectionView,
+                            layout collectionViewLayout: UICollectionViewLayout,
+                            insetForSectionAt section: Int) -> UIEdgeInsets {
         let spacing = sectionSpacing
         
         // We set top and bottom insets to space out sections.
         return UIEdgeInsets(top: spacing, left: 0, bottom: spacing, right: 0)
     }
     
-    public func collectionView(_ collectionView: UICollectionView,
-                               layout collectionViewLayout: UICollectionViewLayout,
-                               minimumInteritemSpacingForSectionAt section: Int)
+    open func collectionView(_ collectionView: UICollectionView,
+                            layout collectionViewLayout: UICollectionViewLayout,
+                            minimumInteritemSpacingForSectionAt section: Int)
         -> CGFloat
     {
         return 0
     }
     
-    public func collectionView(_ collectionView: UICollectionView,
-                               layout collectionViewLayout: UICollectionViewLayout,
-                               minimumLineSpacingForSectionAt section: Int)
+    open func collectionView(_ collectionView: UICollectionView,
+                            layout collectionViewLayout: UICollectionViewLayout,
+                            minimumLineSpacingForSectionAt section: Int)
         -> CGFloat
     {
         return itemSpacing
@@ -111,9 +111,9 @@ extension BaseCollectionViewPresenter: UICollectionViewDelegateFlowLayout {
     ///   - collectionViewLayout: A UICollectionViewLayout instance.
     ///   - indexPath: An IndexPath instance.
     /// - Returns: A CGSize instance.
-    public func collectionView(_ collectionView: UICollectionView,
-                               layout collectionViewLayout: UICollectionViewLayout,
-                               sizeForItemAt indexPath: IndexPath) -> CGSize {
+    open func collectionView(_ collectionView: UICollectionView,
+                            layout collectionViewLayout: UICollectionViewLayout,
+                            sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.bounds.width, height: itemHeight)
     }
 }
