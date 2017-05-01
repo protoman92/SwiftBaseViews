@@ -76,6 +76,7 @@ public extension UIBaseCollectionView {
     }
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout
 extension BaseCollectionViewPresenter: UICollectionViewDelegateFlowLayout {
     public func collectionView(_ collectionView: UICollectionView,
                                layout collectionViewLayout: UICollectionViewLayout,
@@ -101,6 +102,20 @@ extension BaseCollectionViewPresenter: UICollectionViewDelegateFlowLayout {
     {
         return itemSpacing
     }
+    
+    /// Override this function to provide custom size. The implementation
+    /// below represents the setup that is most commonly used.
+    ///
+    /// - Parameters:
+    ///   - collectionView: The current UICollectionView instance.
+    ///   - collectionViewLayout: A UICollectionViewLayout instance.
+    ///   - indexPath: An IndexPath instance.
+    /// - Returns: A CGSize instance.
+    public func collectionView(_ collectionView: UICollectionView,
+                               layout collectionViewLayout: UICollectionViewLayout,
+                               sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.bounds.width, height: itemHeight)
+    }
 }
 
 extension BaseCollectionViewPresenter: CollectionViewDecoratorType {
@@ -117,6 +132,10 @@ extension BaseCollectionViewPresenter: CollectionViewDecoratorType {
     
     open var sectionHeight: CGFloat {
         return decorator?.sectionHeight ?? 0
+    }
+    
+    open var itemHeight: CGFloat {
+        return decorator?.itemHeight ?? 0
     }
 }
 

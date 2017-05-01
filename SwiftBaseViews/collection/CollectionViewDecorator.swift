@@ -18,6 +18,9 @@ import UIKit
     /// This value will be used to separate consecutive sections.
     @objc optional var sectionSpacing: CGFloat { get }
     
+    /// This value will be used to set the cell's height.
+    @objc optional var itemHeight: CGFloat { get }
+    
     /// This value will be used to resize the header view.
     @objc optional var sectionHeight: CGFloat { get }
 }
