@@ -20,10 +20,20 @@ open class UIBaseCollectionView: UICollectionView {
     open var presenterInstance: BaseCollectionViewPresenter? {
         fatalError("Must override this")
     }
+    
+    /// Call the presenter's layoutSubview(for:) method.
+    override open func layoutSubviews() {
+        super.layoutSubviews()
+        presenterInstance?.layoutSubviews(for: self)
+    }
 }
 
 /// Base presenter class for UIBaseCollectionView.
 open class BaseCollectionViewPresenter: BaseViewPresenter {
+    
+    /// Set this to true after layoutSubviews() has been called for the first
+    /// time.
+    fileprivate lazy var initialized = false
     
     /// Return the current CollectionViewDecoratorType instance.
     public var decorator: CollectionViewDecoratorType? {
@@ -40,7 +50,23 @@ open class BaseCollectionViewPresenter: BaseViewPresenter {
         rxDecorator = Variable<CollectionViewDecoratorType?>(nil)
         disposeBag = DisposeBag()
         super.init(view: view)
+    }
+    
+    override open func layoutSubviews(for view: UIView) {
+        super.layoutSubviews(for: view)
+        
+        guard !initialized, let view = view as? UICollectionView else {
+            return
+        }
+        
+        defer { initialized = true }
+        
         setupDecoratorObserver(for: view, with: self)
+        
+        // We need to set the delegate here, or else when the cells are
+        // dequeued they may have wrong dimensions. Worse case scenario, they
+        // may even be dequeued at all.
+        view.delegate = self
     }
     
     /// Stub out this method to avoid double-calling reloadData() during

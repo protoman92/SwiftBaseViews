@@ -34,7 +34,8 @@ class UIBaseCollectionViewTests: XCTestCase {
             collectionViewLayout: UICollectionViewLayout()
         )
         
-        presenter = Presenter(view: collectionView)
+        presenter = collectionView.presenter
+        collectionView.layoutSubviews()
     }
     
     func test_onDecoratorSet_shouldTriggerReload() {
