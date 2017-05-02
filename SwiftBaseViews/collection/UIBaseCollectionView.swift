@@ -52,6 +52,9 @@ open class BaseCollectionViewPresenter: BaseViewPresenter {
         super.init(view: view)
     }
     
+    /// Set dataSource and delegate here.
+    ///
+    /// - Parameter view: A UIView instance.
     override open func layoutSubviews(for view: UIView) {
         super.layoutSubviews(for: view)
         
@@ -67,6 +70,7 @@ open class BaseCollectionViewPresenter: BaseViewPresenter {
         // dequeued they may have wrong dimensions. Worse case scenario, they
         // may even be dequeued at all.
         view.delegate = self
+        view.dataSource = self
     }
     
     /// Stub out this method to avoid double-calling reloadData() during
@@ -88,9 +92,7 @@ open class BaseCollectionViewPresenter: BaseViewPresenter {
     /// Reload data for the current collection view.
     ///
     /// - Parameter view: A UICollectionView instance.
-    open func reloadData(for view: UICollectionView?) {
-        view?.reloadData()
-    }
+    open func reloadData(for view: UICollectionView?) { view?.reloadData() }
 }
 
 extension UIBaseCollectionView {
@@ -102,7 +104,26 @@ extension UIBaseCollectionView {
     }
 }
 
-// MARK: - UICollectionViewDelegateFlowLayout
+// MARK: - UICollectionViewDataSource.
+extension BaseCollectionViewPresenter: UICollectionViewDataSource {
+    open func numberOfSections(in collectionView: UICollectionView) -> Int {
+            fatalError("Must override this")
+    }
+    
+    open func collectionView(_ collectionView: UICollectionView,
+                             numberOfItemsInSection section: Int) -> Int {
+        fatalError("Must override this")
+    }
+    
+    open func collectionView(_ collectionView: UICollectionView,
+                             cellForItemAt indexPath: IndexPath)
+        -> UICollectionViewCell
+    {
+        fatalError("Must override this")
+    }
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout.
 extension BaseCollectionViewPresenter: UICollectionViewDelegateFlowLayout {
     open func collectionView(_ collectionView: UICollectionView,
                             layout collectionViewLayout: UICollectionViewLayout,
@@ -145,23 +166,9 @@ extension BaseCollectionViewPresenter: UICollectionViewDelegateFlowLayout {
 }
 
 extension BaseCollectionViewPresenter: CollectionViewDecoratorType {
-    
-    /// Item spacing.
-    open var itemSpacing: CGFloat {
-        return decorator?.itemSpacing ?? 0
-    }
-    
-    /// Section spacing
-    open var sectionSpacing: CGFloat {
-        return decorator?.sectionSpacing ?? 0
-    }
-    
-    open var sectionHeight: CGFloat {
-        return decorator?.sectionHeight ?? 0
-    }
-    
-    open var itemHeight: CGFloat {
-        return decorator?.itemHeight ?? 0
-    }
+    open var itemSpacing: CGFloat { return decorator?.itemSpacing ?? 0 }
+    open var sectionSpacing: CGFloat { return decorator?.sectionSpacing ?? 0 }
+    open var sectionHeight: CGFloat { return decorator?.sectionHeight ?? 0 }
+    open var itemHeight: CGFloat { return decorator?.itemHeight ?? 0 }
 }
 
