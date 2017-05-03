@@ -1,6 +1,6 @@
 //
 //  ListHeaderBuilder.swift
-//  SwiftInputListView
+//  SwiftBaseViews
 //
 //  Created by Hai Pham on 4/25/17.
 //  Copyright © 2017 Swiften. All rights reserved.
@@ -87,7 +87,7 @@ open class ListHeaderBuilder {
         return FitConstraintSet.builder()
             .with(parent: view)
             .with(child: label)
-            .add(left: true, withMargin: Space.small.value)
+            .add(left: true, withMargin: headerTitleLeftMargin)
             .add(right: true)
             .add(top: true)
             .add(bottom: true)
@@ -99,8 +99,8 @@ open class ListHeaderBuilder {
 extension ListHeaderBuilder {
     open func configure(for view: UIView) {
         let section = self.section
-        
         view.backgroundColor = backgroundColor
+        view.layer.cornerRadius = cornerRadius
         
         if let headerTitle = view.subviews.filter({
             $0.accessibilityIdentifier == headerTitleId
@@ -112,19 +112,28 @@ extension ListHeaderBuilder {
     /// Configure the header title label.
     ///
     /// - Parameters:
-    ///   - headerTitle: A UILabel instance.
+    ///   - title: A UILabel instance.
     ///   - section: A ListSectionType instance.
     ///   - decorator: A ListHeaderDecoratorType instance.
-    open func configure(headerTitle: UILabel,
+    open func configure(headerTitle title: UILabel,
                         using section: ListSectionType,
                         using decorator: ListHeaderDecoratorType) {
-        headerTitle.textColor = headerTitleTextColor
-        headerTitle.font = headerTitleFont
-        headerTitle.text = section.header
+        title.textColor = decorator.headerTitleTextColor
+        title.font = decorator.headerTitleFont
+        title.text = section.header
+        title.textAlignment = decorator.headerTitleTextAlignment ?? .natural
     }
 }
 
 extension ListHeaderBuilder: ListHeaderDecoratorType {
+    public var backgroundColor: UIColor {
+        return decorator.backgroundColor ?? .clear
+    }
+    
+    public var cornerRadius: CGFloat {
+        return decorator.cornerRadius ?? Space.smaller.value ?? 0
+    }
+    
     public var headerTitleFontName: String {
         return decorator.headerTitleFontName ?? DefaultFont.normal.value
     }
@@ -137,8 +146,12 @@ extension ListHeaderBuilder: ListHeaderDecoratorType {
         return decorator.headerTitleTextColor ?? .darkGray
     }
     
-    public var backgroundColor: UIColor {
-        return decorator.backgroundColor ?? .clear
+    public var headerTitleLeftMargin: CGFloat {
+        return decorator.headerTitleLeftMargin ?? 0
+    }
+    
+    public var headerTitleTextAlignment: NSTextAlignment {
+        return decorator.headerTitleTextAlignment ?? .natural
     }
 }
 

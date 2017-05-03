@@ -145,6 +145,24 @@ public extension BaseViewControllerPresenter {
     }
 }
 
+extension BaseViewControllerPresenter {
+    
+    /// Present a UIViewController.
+    ///
+    /// - Parameters:
+    ///   - controller: The UIViewController instance to be presented.
+    ///   - animated: A Bool value.
+    ///   - completion: An optional completion closure.
+    open func presentController(_ controller: UIViewController,
+                                animated: Bool,
+                                completion: (() -> Void)?) {
+        viewController?.presentController(controller,
+                                          animated: animated,
+                                          completion: completion)
+    }
+}
+
 extension BaseViewControllerPresenter: ViewControllerPresenterType {}
 extension BaseViewControllerPresenter: OrientationDetectorType {}
+extension BaseViewControllerPresenter: ControllerPresentableType {}
 extension UIViewController: PresenterDelegate {}
