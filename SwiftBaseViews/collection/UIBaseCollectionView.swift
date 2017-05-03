@@ -69,8 +69,8 @@ open class BaseCollectionViewPresenter: BaseViewPresenter {
         // We need to set the delegate here, or else when the cells are
         // dequeued they may have wrong dimensions. Worse case scenario, they
         // may even be dequeued at all.
-        view.delegate = self
-        view.dataSource = self
+        view.rx.setDelegate(self).addDisposableTo(disposeBag)
+        view.rx.setDataSource(self).addDisposableTo(disposeBag)
     }
     
     /// Stub out this method to avoid double-calling reloadData() during
@@ -107,7 +107,7 @@ extension UIBaseCollectionView {
 // MARK: - UICollectionViewDataSource.
 extension BaseCollectionViewPresenter: UICollectionViewDataSource {
     open func numberOfSections(in collectionView: UICollectionView) -> Int {
-            fatalError("Must override this")
+        fatalError("Must override this")
     }
     
     open func collectionView(_ collectionView: UICollectionView,
@@ -165,10 +165,10 @@ extension BaseCollectionViewPresenter: UICollectionViewDelegateFlowLayout {
     }
 }
 
+// MARK: - CollectionViewDecoratorType.
 extension BaseCollectionViewPresenter: CollectionViewDecoratorType {
     open var itemSpacing: CGFloat { return decorator?.itemSpacing ?? 0 }
     open var sectionSpacing: CGFloat { return decorator?.sectionSpacing ?? 0 }
     open var sectionHeight: CGFloat { return decorator?.sectionHeight ?? 0 }
     open var itemHeight: CGFloat { return decorator?.itemHeight ?? 0 }
 }
-
