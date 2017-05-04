@@ -38,7 +38,7 @@ open class BaseCollectionViewPresenter: BaseViewPresenter {
     
     /// Subclasses can cast this variable into the correct delegate type. We
     /// do not use a Variable with this due to possibility of strong captures.
-    weak var baseDelegate: UIBaseCollectionViewDelegate? {
+    public weak var baseDelegate: UIBaseCollectionViewDelegate? {
         didSet {
             didSet(delegate: baseDelegate)
         }
