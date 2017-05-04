@@ -93,6 +93,14 @@ open class BaseCollectionViewPresenter: BaseViewPresenter {
     ///
     /// - Parameter view: A UICollectionView instance.
     open func reloadData(for view: UICollectionView?) { view?.reloadData() }
+    
+    /// Invalidate the collection view's layout. This is useful when the
+    /// user rotates the screen leading to an orientation change.
+    ///
+    /// - Parameter view: The current UICollectionView instance.
+    open func invalidateLayout(for view: UICollectionView?) {
+        view?.collectionViewLayout.invalidateLayout()
+    }
 }
 
 extension UIBaseCollectionView {
