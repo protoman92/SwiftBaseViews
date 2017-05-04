@@ -7,8 +7,13 @@
 //
 
 import RxSwift
+import SwiftUtilities
 import SwiftUIUtilities
 import UIKit
+
+/// Implement this protocol to provide basic delegation interface for
+/// UIBaseCollectionView.
+public protocol UIBaseCollectionViewDelegate: class, ReactiveOrientationDetectorType {}
 
 /// Extend this class to enjoy preset configurations. Please note that this
 /// is quite opinionated, so if customization is what you are looking for,
@@ -30,6 +35,14 @@ open class UIBaseCollectionView: UICollectionView {
 
 /// Base presenter class for UIBaseCollectionView.
 open class BaseCollectionViewPresenter: BaseViewPresenter {
+    
+    /// Subclasses can cast this variable into the correct delegate type. We
+    /// do not use a Variable with this due to possibility of strong captures.
+    weak var baseDelegate: UIBaseCollectionViewDelegate? {
+        didSet {
+            didSet(delegate: baseDelegate)
+        }
+    }
     
     /// Set this to true after layoutSubviews() has been called for the first
     /// time.
@@ -73,6 +86,44 @@ open class BaseCollectionViewPresenter: BaseViewPresenter {
         view.rx.setDataSource(self).addDisposableTo(disposeBag)
     }
     
+    /// Call this method when the delegate is set.
+    ///
+    /// - Parameter delegate: A UIBaseCollectionViewDelegate instance.
+    open func didSet(delegate: UIBaseCollectionViewDelegate?) {
+        guard let view = collectionView, let delegate = delegate else {
+            debugException()
+            return
+        }
+        
+        setupOrientationObserver(for: view, using: delegate, with: self)
+    }
+    
+    /// Setup orientation observer in order to invalidateLayout every
+    /// time orientation changes.
+    ///
+    /// - Parameters:
+    ///   - view: The current UICollectionView instance.
+    ///   - detector: A ReactiveOrientationDetectorType instance.
+    ///   - current: The current BaseCollectionViewPresenter instance.
+    open func setupOrientationObserver(
+        for view: UICollectionView,
+        using detector: ReactiveOrientationDetectorType,
+        with current: BaseCollectionViewPresenter)
+    {
+        detector.rxScreenOrientation
+            // Skip the first emission, since it is the default value as set
+            // by the screenSize Variable.
+            .skip(1)
+            .doOnNext({[weak current, weak view] _ in
+                // We need to invalidate layout, or else the collection
+                // view will be incorrectly laid out due to obsolete
+                // constraints.
+                current?.invalidateLayout(for: view)
+            })
+            .subscribe()
+            .addDisposableTo(current.disposeBag)
+    }
+    
     /// Stub out this method to avoid double-calling reloadData() during
     /// unit tests.
     ///
@@ -109,6 +160,18 @@ extension UIBaseCollectionView {
     open var decorator: CollectionViewDecoratorType? {
         get { return presenterInstance?.rxDecorator.value }
         set { presenterInstance?.rxDecorator.value = newValue }
+    }
+    
+    /// When baseDelegate is set, pass it to the presenter.
+    open var baseDelegate: UIBaseCollectionViewDelegate? {
+        get { return presenterInstance?.baseDelegate }
+        set { presenterInstance?.baseDelegate = newValue }
+    }
+}
+
+extension BaseCollectionViewPresenter {
+    open var collectionView: UIBaseCollectionView? {
+        return viewDelegate as? UIBaseCollectionView
     }
 }
 
