@@ -163,6 +163,6 @@ extension BaseViewControllerPresenter {
 }
 
 extension BaseViewControllerPresenter: ViewControllerPresenterType {}
-extension BaseViewControllerPresenter: OrientationDetectorType {}
+extension BaseViewControllerPresenter: ReactiveOrientationDetectorType {}
 extension BaseViewControllerPresenter: ControllerPresentableType {}
 extension UIViewController: PresenterDelegate {}
